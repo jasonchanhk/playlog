@@ -11,8 +11,33 @@ const URLInput: React.FC<props> = ({ url, setUrl }) => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        setUrl(localUrl);
+        extractVideoIdFromUrl(localUrl);
+        setLocalUrl('');
     }
+
+    const extractVideoIdFromUrl = (url: string) => {
+        try {
+            const urlObject = new URL(url);
+            if (urlObject.host === "www.youtube.com" || urlObject.host === "youtube.com") {
+                const searchParams = new URLSearchParams(urlObject.search);
+                const videoId = searchParams.get("v");
+                if (videoId != null) {
+                    setUrl(videoId);
+                } else {
+                    throw new Error('Sorry, for some reasons we cannot find the video id')
+                }
+            } else {
+                // Handle invalid or unsupported URL
+                throw new Error('Sorry, the url you sent was not from youtube')
+            }
+        } catch (error) {
+            // Handle invalid URLs or parsing errors
+            if (error instanceof Error) {
+                alert(error.message)
+            }
+        }
+    }
+
 
     return (
         <div>
@@ -21,8 +46,8 @@ const URLInput: React.FC<props> = ({ url, setUrl }) => {
                 <input type='input' value={localUrl} onChange={(e) => setLocalUrl(e.target.value)} placeholder='Youtube URL' />
                 <button type='submit'>Go</button>
             </form>
-            Current URL: {url}
-            <br/>
+            Video Id: {url}
+            <br />
             ---END---
         </div>
     )
