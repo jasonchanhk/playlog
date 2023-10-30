@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import URLInput from './components/URLInput';
+import YTplayer from './components/YTplayer';
 
 function App() {
   const [url, setUrl] = useState<string>('')
@@ -11,6 +12,7 @@ function App() {
         Hello world!
       </h1>
       <URLInput url={url} setUrl={setUrl}/>
+      <YTplayer url={url}/>
     </div>
   );
 }

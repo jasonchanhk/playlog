@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 interface props {
-    url: String;
+    url: string;
     setUrl: React.Dispatch<React.SetStateAction<string>>;
 }
 
