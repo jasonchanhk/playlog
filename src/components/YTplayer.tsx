@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import { timeStamp } from 'console';
+import React, { useState, useEffect } from 'react'
 import YouTube, { YouTubePlayer } from 'react-youtube';
 
 interface props {
     url: string;
 }
+
+let videoElement: YouTubePlayer = null;
 
 const YTplayer: React.FC<props> = ({ url }) => {
 
@@ -14,17 +17,30 @@ const YTplayer: React.FC<props> = ({ url }) => {
         width: '640'
     };
 
-    const handlePause = (e: YouTubePlayer) => {
-        const current = e.target.getCurrentTime();
+    const handleResume = (e: React.MouseEvent) => {
+        e.preventDefault();
+        const targetTimestamp = (e.target as HTMLButtonElement).getAttribute('data-value');
+        videoElement.target.seekTo(targetTimestamp);
+    }
+
+    const handleClick = (e: React.MouseEvent) => {
+        e.preventDefault();
+        const current = videoElement.target.getCurrentTime();
+        //YouTubePlayer.getDuraction();
         setTimestamps(prev => [...prev, current]);
     }
 
+    const _onReady = (event: YouTubePlayer) => {
+        videoElement = event;
+    };
+
     return (
         <div>
-            <YouTube videoId={url} opts={opts} onPause={handlePause} />
+            <YouTube videoId={url} opts={opts} onReady={_onReady} />
+            <button type='button' onClick={handleClick}>Get timestamps</button>
             <ul>
                 {timestamps.map(t => {
-                    return <li>{t}</li>
+                    return <li><button onClick={(e) => handleResume(e)} data-value={t}>{t}</button></li>
                 })}
             </ul>
         </div>
