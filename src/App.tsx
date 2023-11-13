@@ -1,21 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 import URLInput from './components/URLInput';
-import YTplayer from './components/YouTubePlayer';
 import Controlpanel from './components/ControlPanel';
 import ActionHistory from './components/ActionHistory';
+import Container from './components/container';
+import Intro from './components/intro';
+import MainPanel from './components/mainPlanel';
 
 function App() {
-  const [url, setUrl] = useState<string>('')
 
   return (
     <div className="App">
       <ActionHistory />
-      <h1 className="text-3xl font-bold underline">
-        Hello world!
-      </h1>
-      <URLInput url={url} setUrl={setUrl}/>
-      <YTplayer url={url}/>
+      <Container>
+        <Intro />
+
+        <URLInput />
+        <MainPanel />
+      </Container>
       <Controlpanel />
     </div>
   );

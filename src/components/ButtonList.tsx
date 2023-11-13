@@ -1,8 +1,8 @@
 import React from 'react'
 import { player } from './ControlPanel'
-import { addActionHistory } from '../slice/actionHistory';
-import { accessCurrentVideoElement } from '../slice/youTubePlayer';
-import { scoreTwoPoints, missTwoPoints } from '../slice/playerAction'
+import { addActionHistory } from '../slices/actionHistory';
+import { accessCurrentVideoElement } from '../slices/videoSlice';
+import { scoreTwoPoints, missTwoPoints } from '../slices/playerAction'
 import { useAppDispatch, useAppSelector } from '../hooks';
 
 interface props {
@@ -19,7 +19,7 @@ const ButtonList: React.FC<props> = ({ playerName }) => {
         dispatch(addActionHistory({
             playerName: name,
             actionType: action,
-            videoTimeStamp: getCurrentVideoElement.target.getCurrentTime()
+            videoElapsedTimeStamp: getCurrentVideoElement.target.getCurrentTime()
         }))
     }
 
@@ -30,18 +30,6 @@ const ButtonList: React.FC<props> = ({ playerName }) => {
         } else if (action === 'twoPointMiss') {
             dispatch(missTwoPoints(playerName))
         }
-        // setPlayerList(prevPlayerList => {
-        //     return prevPlayerList.map(player => {
-        //         if (player.playerName === playerName) {
-        //             if (action === 'twoPointMade') {
-        //                 return { ...player, twoPointMade: player.twoPointMade + 1, twoPointAttempt: player.twoPointAttempt + 1 };
-        //             } else if (action === 'twoPointAttempt') {
-        //                 return { ...player, twoPointAttempt: player.twoPointAttempt + 1 };
-        //             }
-        //         }
-        //         return player;
-        //     })
-        // })
     }
 
     return (

@@ -1,43 +1,17 @@
 import React, { useState } from 'react'
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { registerVideoUrl, accessCurrentVideoId } from '../slices/videoSlice';
 
-interface props {
-    url: string;
-    setUrl: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const URLInput: React.FC<props> = ({ url, setUrl }) => {
+const URLInput: React.FC = () => {
 
     const [localUrl, setLocalUrl] = useState<string>('')
-
+    const dispatch = useAppDispatch();
+    const videoId = useAppSelector(accessCurrentVideoId);
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        extractVideoIdFromUrl(localUrl);
+        dispatch(registerVideoUrl(localUrl));
         setLocalUrl('');
     }
-
-    const extractVideoIdFromUrl = (url: string) => {
-        try {
-            const urlObject = new URL(url);
-            if (urlObject.host === "www.youtube.com" || urlObject.host === "youtube.com") {
-                const searchParams = new URLSearchParams(urlObject.search);
-                const videoId = searchParams.get("v");
-                if (videoId != null) {
-                    setUrl(videoId);
-                } else {
-                    throw new Error('Sorry, for some reasons we cannot find the video id')
-                }
-            } else {
-                // Handle invalid or unsupported URL
-                throw new Error('Sorry, the url you sent was not from youtube')
-            }
-        } catch (error) {
-            // Handle invalid URLs or parsing errors
-            if (error instanceof Error) {
-                alert(error.message)
-            }
-        }
-    }
-
 
     return (
         <div>
@@ -46,7 +20,7 @@ const URLInput: React.FC<props> = ({ url, setUrl }) => {
                 <input type='input' value={localUrl} onChange={(e) => setLocalUrl(e.target.value)} placeholder='Youtube URL' />
                 <button type='submit'>Go</button>
             </form>
-            Video Id: {url}
+            Video Id: {videoId}
             <br />
             ---END---
         </div>

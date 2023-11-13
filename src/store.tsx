@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
-import YoutubePlayerReducer from './slice/youTubePlayer'
-import ActionHistoryReducer from './slice/actionHistory'
-import PlayerActionReducer from './slice/playerAction'
+import VideoReducer from './slices/videoSlice'
+import ActionHistoryReducer from './slices/actionHistory'
+import PlayerActionReducer from './slices/playerAction'
 
 export const store = configureStore({
   reducer: {
     actionHistory: ActionHistoryReducer, 
-    youtubePlayer: YoutubePlayerReducer,
+    video: VideoReducer,
     playerAction: PlayerActionReducer
   }
 })

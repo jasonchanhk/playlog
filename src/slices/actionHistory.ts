@@ -1,21 +1,18 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 import type { RootState } from '../store'
+import { formatElapsedTime } from '../utils/datetimeHelper';
 
 // Define a type for the slice state
 export interface ActionHistoryState {
     playerName: string;
+    home: boolean;
     actionType: string;
-    videoTimeStamp: string;
+    videoElapsedTimeStamp: string;
+    videoFormattedTimeStamp: string;
 }
 
 // Define the initial state using that type
-const initialState: ActionHistoryState[] = [
-    {
-        playerName: 'Sean',
-        actionType: 'twoPointMade',
-        videoTimeStamp: 'today'
-    }
-];
+const initialState: ActionHistoryState[] = [];
 
 export const ActionHistorySlice = createSlice({
     name: 'ActionHistory',
@@ -23,8 +20,15 @@ export const ActionHistorySlice = createSlice({
     initialState,
     reducers: {
         // Use the PayloadAction type to declare the contents of `action.payload`
-        addActionHistory: (state, action: PayloadAction<ActionHistoryState>) => {
-            state.push(action.payload);
+        addActionHistory: (state, action) => {
+            const {playerName, actionType, videoElapsedTimeStamp } = action.payload;
+            state.push({
+                home: true,
+                playerName: playerName,
+                actionType: actionType,
+                videoElapsedTimeStamp: videoElapsedTimeStamp,
+                videoFormattedTimeStamp: formatElapsedTime(action.payload.videoElapsedTimeStamp)
+            });
         }
     }
 })

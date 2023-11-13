@@ -6,7 +6,7 @@ import Draggable from '../templates/Draggable';
 import ButtonList from './ButtonList';
 
 import { useAppSelector } from '../hooks';
-import { showAllPlayerAction } from '../slice/playerAction'
+import { showAllPlayerAction } from '../slices/playerAction'
 
 export interface player {
   playerName: string;

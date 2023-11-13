@@ -1,12 +1,7 @@
-import { timeStamp } from 'console';
 import React, { useState, useEffect } from 'react'
 import YouTube, { YouTubePlayer } from 'react-youtube';
-import { useAppDispatch } from '../hooks'
-import { registerVideoElement } from '../slice/youTubePlayer'
-
-interface props {
-    url: string;
-}
+import { useAppDispatch, useAppSelector } from '../hooks'
+import { accessCurrentVideoId, registerVideoElement } from '../slices/videoSlice'
 
 interface timestamp {
     formattedTime: string;
@@ -15,10 +10,11 @@ interface timestamp {
 
 let videoElement: YouTubePlayer = null;
 
-const YTplayer: React.FC<props> = ({ url }) => {
+const VideoPlayer: React.FC = () => {
 
     const [timestamps, setTimestamps] = useState<timestamp[]>([])
     const dispatch = useAppDispatch();
+    const videoId = useAppSelector(accessCurrentVideoId);
     const opts = {
         height: '390',
         width: '640'
@@ -47,7 +43,7 @@ const YTplayer: React.FC<props> = ({ url }) => {
 
     return (
         <div>
-            <YouTube videoId={url} opts={opts} onReady={_onReady} />
+            <YouTube videoId={videoId} opts={opts} onReady={_onReady} />
             <button type='button' onClick={handleClick}>Get timestamps</button>
             <ul>
                 {timestamps.map(t => {
@@ -58,4 +54,4 @@ const YTplayer: React.FC<props> = ({ url }) => {
     )
 }
 
-export default YTplayer
+export default VideoPlayer

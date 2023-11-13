@@ -1,7 +1,7 @@
 import React from 'react'
 import { useAppSelector } from '../hooks'
-import { showAllActionHistory } from '../slice/actionHistory';
-import { accessCurrentVideoElement } from '../slice/youTubePlayer';
+import { showAllActionHistory } from '../slices/actionHistory';
+import { accessCurrentVideoElement } from '../slices/videoSlice';
 
 const ActionHistory: React.FC = () => {
 
@@ -16,8 +16,8 @@ const ActionHistory: React.FC = () => {
     return (
         <div>
             <ul>
-                {getAllActionHistory.map(({ playerName, actionType, videoTimeStamp }) => {
-                    return <li onClick={handleResume} data-value={videoTimeStamp}>{playerName} {actionType} - {videoTimeStamp}</li>
+                {getAllActionHistory.map(({ playerName, actionType, videoElapsedTimeStamp, videoFormattedTimeStamp }) => {
+                    return <li onClick={handleResume} data-value={videoElapsedTimeStamp}>{playerName} {actionType} - {videoFormattedTimeStamp}</li>
                 })}
             </ul>
         </div>
