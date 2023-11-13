@@ -1,6 +1,8 @@
 import { timeStamp } from 'console';
 import React, { useState, useEffect } from 'react'
 import YouTube, { YouTubePlayer } from 'react-youtube';
+import { useAppDispatch } from '../hooks'
+import { registerVideoElement } from '../slice/youTubePlayer'
 
 interface props {
     url: string;
@@ -16,7 +18,7 @@ let videoElement: YouTubePlayer = null;
 const YTplayer: React.FC<props> = ({ url }) => {
 
     const [timestamps, setTimestamps] = useState<timestamp[]>([])
-
+    const dispatch = useAppDispatch();
     const opts = {
         height: '390',
         width: '640'
@@ -35,10 +37,11 @@ const YTplayer: React.FC<props> = ({ url }) => {
         const min = Math.floor(elapsed_milliseconds / 60000);
         const seconds = Math.floor((elapsed_milliseconds - min * 60000) / 1000);
         const formattedCurrentTime = min.toString().padStart(2, "0") + ":" + seconds.toString().padStart(2, "0");
-        setTimestamps(prev => [...prev, {formattedTime: formattedCurrentTime, elapsedTime: elapsed_seconds}]);
+        setTimestamps(prev => [...prev, { formattedTime: formattedCurrentTime, elapsedTime: elapsed_seconds }]);
     }
 
     const _onReady = (event: YouTubePlayer) => {
+        dispatch(registerVideoElement(event));
         videoElement = event;
     };
 
