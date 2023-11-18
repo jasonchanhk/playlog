@@ -1,5 +1,4 @@
 import React from 'react'
-import { player } from './ControlPanel'
 import { addActionHistory } from '../slices/actionHistory';
 import { accessCurrentVideoElement } from '../slices/videoSlice';
 import { scoreTwoPoints, missTwoPoints } from '../slices/playerAction'

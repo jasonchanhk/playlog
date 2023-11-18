@@ -9,10 +9,6 @@ const VideoPlayer: React.FC = () => {
 
     const dispatch = useAppDispatch();
     const videoId = useAppSelector(accessCurrentVideoId);
-    const opts = {
-        height: '390',
-        width: '640'
-    };
 
     const _onReady = (event: YouTubePlayer) => {
         dispatch(registerVideoElement(event));

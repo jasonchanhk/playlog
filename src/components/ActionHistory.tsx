@@ -2,6 +2,7 @@ import React from 'react'
 import { useAppSelector } from '../hooks'
 import { showAllActionHistory } from '../slices/actionHistory';
 import { accessCurrentVideoElement } from '../slices/videoSlice';
+import Container from './container';
 
 const ActionHistory: React.FC = () => {
 
@@ -14,13 +15,14 @@ const ActionHistory: React.FC = () => {
         getCurrentVideoElement.target.seekTo(targetTimestamp);
     }
     return (
-        <div>
+        <section>
+            <span>Action History</span>
             <ul>
                 {getAllActionHistory.map(({ playerName, actionType, videoElapsedTimeStamp, videoFormattedTimeStamp }) => {
                     return <li onClick={handleResume} data-value={videoElapsedTimeStamp}>{playerName} {actionType} - {videoFormattedTimeStamp}</li>
                 })}
             </ul>
-        </div>
+        </section>
     )
 }
 

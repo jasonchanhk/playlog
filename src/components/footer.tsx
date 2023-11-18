@@ -1,14 +1,13 @@
 import React from 'react'
 import Container from './container'
-import ActionHistory from './ActionHistory'
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-accent-1 border-t border-accent-2">
+    <footer className="bg-slate-100 border-t border-slate-200">
       <Container>
         <div className="py-28 flex flex-col lg:flex-row items-center">
           <h3 className="text-4xl lg:text-5xl font-bold tracking-tighter leading-tight text-center lg:text-left mb-10 lg:mb-0 lg:pr-4 lg:w-1/2">
-            Statically Generated with Next.js.
+            Register to our Beta trial
           </h3>
           <div className="flex flex-col lg:flex-row justify-center items-center lg:pl-4 lg:w-1/2">
             <a
@@ -25,8 +24,6 @@ const Footer: React.FC = () => {
             </a>
           </div>
         </div>
-
-      <ActionHistory />
       </Container>
     </footer>
   )
