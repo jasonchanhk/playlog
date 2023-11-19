@@ -64,7 +64,7 @@ const MainPanel: React.FC = () => {
                         <PlayerList />
                     </div>
                 </div>
-                <div className='flex-initial w-72 bg-slate-200'>
+                <div className='flex-initial w-72'>
                     <ActionHistory />
                 </div>
             </div>
