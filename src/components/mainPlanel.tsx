@@ -6,7 +6,7 @@ import Draggable from '../templates/Draggable';
 import ButtonList from './ButtonList';
 
 import { useAppSelector } from '../hooks';
-import { showAllPlayerAction } from '../slices/playerAction'
+import { showAllPlayerAction } from '../slices/playerSlice'
 import VideoPlayer from './videoPlayer';
 import ActionHistory from './actionHistory';
 import PlayerList from './playerList';
@@ -59,9 +59,9 @@ const MainPanel: React.FC = () => {
                         <VideoPlayer />
                     </div>
                     <div className="md:grid md:grid-cols-3 md:gap-x-16 lg:gap-x-4 max-h-full">
-                        <PlayerList />
+                        <PlayerList team='Westman'/>
                         <div>Home v.s. Away</div>
-                        <PlayerList />
+                        <PlayerList team='Sutton'/>
                     </div>
                 </div>
                 <div className='flex-initial w-72'>

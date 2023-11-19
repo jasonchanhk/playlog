@@ -8,15 +8,13 @@ import { FaListUl } from "react-icons/fa";
 import { IconContext } from "react-icons"
 
 import { useAppSelector } from '../hooks';
-import { showAllPlayerAction } from '../slices/playerAction'
+import { showAllPlayerAction } from '../slices/playerSlice'
 
-export interface player {
-  playerName: string;
-  twoPointAttempt: number;
-  twoPointMade: number;
+interface props {
+  team: string
 }
 
-const PlayerList: React.FC = () => {
+const PlayerList: React.FC<props> = ({team}) => {
 
   const getAllPlayer = useAppSelector(showAllPlayerAction);
   // const handleDragEnd = (event: DragEndEvent) => {
@@ -64,19 +62,19 @@ const PlayerList: React.FC = () => {
       } */}
       <ul role="list" className="divide-y divide-gray-100p px-4">
         {
-          getAllPlayer.map(({ playerName, twoPointMade, twoPointMiss }) => {
+          getAllPlayer.filter(player => player.team == team).map(({ name, jersey, made }) => {
             return (
               <li className='flex justify-between gap-x-6 py-1'>
                 <div className="flex min-w-0 gap-x-4">
-                  <div className="flex items-center justify-center">
+                  <div className="flex items-center justify-center w-8">
                     <span className=" font-bold text-3xl tracking-tighter italic leading-tight">
-                      23
+                      {jersey}
                     </span>
                   </div>
                   <div className="min-w-0 flex-auto">
-                    <div className="text-sm font-semibold leading-tight text-gray-900">{playerName}</div>
+                    <div className="text-sm font-semibold leading-tight text-gray-900">{name}</div>
                     <div className="text-xs text-gray-500 w-full flex leading-tight">
-                      <span className='w-10'>{twoPointMade * 2} pts</span>
+                      <span className='w-10'>{made.onePoint * 1 + made.twoPoint * 2 + made.threePoint * 3} pts</span>
                       <span className='w-10'>0 reb</span>
                       <span className='w-10'>0 ast</span>
                     </div>
@@ -84,7 +82,7 @@ const PlayerList: React.FC = () => {
                 </div>
                 <div className='has-tooltip'>
                   <span className='tooltip rounded shadow-lg p-1 bg-gray-100 text-red-500 -mt-8'>
-                    <ButtonList playerName={playerName} />
+                    <ButtonList name={name} />
                   </span>
                   <IconContext.Provider value={{ className: "h-full flex item-center text-lg"}}><FaListUl /></IconContext.Provider>
                 </div>
