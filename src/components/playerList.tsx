@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
-
 import Droppable from '../templates/Droppable';
 import Draggable from '../templates/Draggable';
 import ButtonList from './ButtonList';
+
+import { FaListUl } from "react-icons/fa";
+import { IconContext } from "react-icons"
 
 import { useAppSelector } from '../hooks';
 import { showAllPlayerAction } from '../slices/playerAction'
@@ -47,7 +49,7 @@ const PlayerList: React.FC = () => {
     //   }
     // </DndContext>
 
-    <div className='bg-green-200'>
+    <div className=''>
       {/* {
         playerList.map(({ playerName, twoPointMade, twoPointAttempt }) => {
           return (
@@ -60,25 +62,31 @@ const PlayerList: React.FC = () => {
           )
         })
       } */}
-      <ul role="list" className="divide-y divide-gray-100p py-2 px-4">
+      <ul role="list" className="divide-y divide-gray-100p px-4">
         {
           getAllPlayer.map(({ playerName, twoPointMade, twoPointMiss }) => {
             return (
               <li className='flex justify-between gap-x-6 py-1'>
                 <div className="flex min-w-0 gap-x-4">
-                  <img className="h-12 w-12 flex-none rounded-full bg-gray-50" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                  <div className="flex items-center justify-center">
+                    <span className=" font-bold text-3xl tracking-tighter italic leading-tight">
+                      23
+                    </span>
+                  </div>
                   <div className="min-w-0 flex-auto">
-                    <div className="text-sm font-semibold leading-6 text-gray-900">{playerName}</div>
-                    <div className="mt-0.5 truncate text-xs leading-5 text-gray-500">{twoPointMade * 2}pt</div>
+                    <div className="text-sm font-semibold leading-tight text-gray-900">{playerName}</div>
+                    <div className="text-xs text-gray-500 w-full flex leading-tight">
+                      <span className='w-10'>{twoPointMade * 2} pts</span>
+                      <span className='w-10'>0 reb</span>
+                      <span className='w-10'>0 ast</span>
+                    </div>
                   </div>
                 </div>
-                <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                  <div className='has-tooltip'>
-                    <span className='tooltip rounded shadow-lg p-1 bg-gray-100 text-red-500 -mt-8'>
-                      <ButtonList playerName={playerName} />
-                    </span>
-                    <div>icon</div>
-                  </div>
+                <div className='has-tooltip'>
+                  <span className='tooltip rounded shadow-lg p-1 bg-gray-100 text-red-500 -mt-8'>
+                    <ButtonList playerName={playerName} />
+                  </span>
+                  <IconContext.Provider value={{ className: "h-full flex item-center text-lg"}}><FaListUl /></IconContext.Provider>
                 </div>
               </li>
             )

@@ -7,7 +7,7 @@ const Footer: React.FC = () => {
       <Container>
         <div className="py-28 flex flex-col lg:flex-row items-center">
           <h3 className="text-4xl lg:text-5xl font-bold tracking-tighter leading-tight text-center lg:text-left mb-10 lg:mb-0 lg:pr-4 lg:w-1/2">
-            Register to our Beta trial
+            Register to our Beta trial 
           </h3>
           <div className="flex flex-col lg:flex-row justify-center items-center lg:pl-4 lg:w-1/2">
             <a
@@ -23,6 +23,7 @@ const Footer: React.FC = () => {
               View on GitHub
             </a>
           </div>
+          <span><a href="https://www.flaticon.com/free-icons/basketball-jersey" title="basketball jersey icons">Basketball jersey icons created by IdeaGrafc - Flaticon</a>5555</span>
         </div>
       </Container>
     </footer>

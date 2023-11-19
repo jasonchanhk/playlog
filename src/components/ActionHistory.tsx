@@ -2,7 +2,6 @@ import React from 'react'
 import { useAppSelector } from '../hooks'
 import { showAllActionHistory } from '../slices/actionHistory';
 import { accessCurrentVideoElement } from '../slices/videoSlice';
-import Container from './container';
 
 const ActionHistory: React.FC = () => {
 
