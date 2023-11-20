@@ -1,14 +1,15 @@
 import React from 'react'
 import { addActionHistory } from '../slices/actionHistory';
 import { accessCurrentVideoElement } from '../slices/videoSlice';
-import { shot } from '../slices/playerSlice'
+import { shot } from '../slices/gameSlice'
 import { useAppDispatch, useAppSelector } from '../hooks';
 
 interface props {
-    name: string;
+    home: boolean;
+    id: string;
 }
 
-const ButtonList: React.FC<props> = ({ name }) => {
+const ButtonList: React.FC<props> = ({ home, id }) => {
     const dispatch = useAppDispatch();
     const getCurrentVideoElement = useAppSelector(accessCurrentVideoElement);
 
@@ -22,20 +23,20 @@ const ButtonList: React.FC<props> = ({ name }) => {
         }))
     }
 
-    const handleClick = (action: string, name: string) => {
-        addHistory(name, action);
+    const handleClick = (action: string, id: string) => {
+        addHistory(id, action);
         switch (action) {
             case 'Made 2':
-                dispatch(shot({ name, type: 'made', point: 'twoPoint' }))
+                dispatch(shot({ home, id, type: 'made', point: 'twoPoint' }))
                 break;
             case 'Missed 2':
-                dispatch(shot({ name, type: 'missed', point: 'twoPoint' }))
+                dispatch(shot({ home, id, type: 'missed', point: 'twoPoint' }))
                 break;
             case 'Made 3':
-                dispatch(shot({ name, type: 'made', point: 'threePoint' }))
+                dispatch(shot({ home, id, type: 'made', point: 'threePoint' }))
                 break;
             case 'Missed 3':
-                dispatch(shot({ name, type: 'missed', point: 'threePoint' }))
+                dispatch(shot({ home, id, type: 'missed', point: 'threePoint' }))
                 break;
         }
     }
@@ -43,7 +44,7 @@ const ButtonList: React.FC<props> = ({ name }) => {
     return (
         <div>
             {buttonList.map((action) => {
-                return <button onClick={() => handleClick(action, name)}>{action}</button>
+                return <button onClick={() => handleClick(action, id)}>{action}</button>
             })}
         </div>
     )

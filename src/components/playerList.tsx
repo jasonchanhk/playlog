@@ -8,15 +8,15 @@ import { FaListUl } from "react-icons/fa";
 import { IconContext } from "react-icons"
 
 import { useAppSelector } from '../hooks';
-import { showAllPlayerAction } from '../slices/playerSlice'
+import { TeamState } from '../slices/gameSlice'
 
 interface props {
-  team: string
+  home: boolean;
+  team: TeamState;
 }
 
-const PlayerList: React.FC<props> = ({team}) => {
+const PlayerList: React.FC<props> = ({ home, team }) => {
 
-  const getAllPlayer = useAppSelector(showAllPlayerAction);
   // const handleDragEnd = (event: DragEndEvent) => {
   //   if (event.over) {
   //     setPlayerList(prevPlayerList => {
@@ -47,7 +47,7 @@ const PlayerList: React.FC<props> = ({team}) => {
     //   }
     // </DndContext>
 
-    <div className=''>
+    <div>
       {/* {
         playerList.map(({ playerName, twoPointMade, twoPointAttempt }) => {
           return (
@@ -62,12 +62,12 @@ const PlayerList: React.FC<props> = ({team}) => {
       } */}
       <ul role="list" className="divide-y divide-gray-100p px-4">
         {
-          getAllPlayer.filter(player => player.team == team).map(({ name, jersey, made }) => {
+          team.players.map(({ id, name, jersey, made }) => {
             return (
               <li className='flex justify-between gap-x-6 py-1'>
                 <div className="flex min-w-0 gap-x-4">
-                  <div className="flex items-center justify-center w-8">
-                    <span className=" font-bold text-3xl tracking-tighter italic leading-tight">
+                  <div className="flex items-center justify-center w-9">
+                    <span className="font-bold text-3xl tracking-tighter italic leading-tight">
                       {jersey}
                     </span>
                   </div>
@@ -82,9 +82,9 @@ const PlayerList: React.FC<props> = ({team}) => {
                 </div>
                 <div className='has-tooltip'>
                   <span className='tooltip rounded shadow-lg p-1 bg-gray-100 text-red-500 -mt-8'>
-                    <ButtonList name={name} />
+                    <ButtonList id={id} home={home}/>
                   </span>
-                  <IconContext.Provider value={{ className: "h-full flex item-center text-lg"}}><FaListUl /></IconContext.Provider>
+                  <IconContext.Provider value={{ className: "h-full flex item-center text-lg" }}><FaListUl /></IconContext.Provider>
                 </div>
               </li>
             )

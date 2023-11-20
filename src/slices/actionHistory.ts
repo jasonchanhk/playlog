@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { RootState } from '../store'
 import { formatElapsedTime } from '../utils/datetimeHelper';
+import { showGameScore } from './gameSlice'
 
 // Define a type for the slice state
 export interface ActionHistoryState {
@@ -9,6 +10,8 @@ export interface ActionHistoryState {
     actionType: string;
     videoElapsedTimeStamp: string;
     videoFormattedTimeStamp: string;
+    // home score
+    // away score
 }
 
 // Define the initial state using that type
@@ -21,7 +24,7 @@ export const ActionHistorySlice = createSlice({
     reducers: {
         // Use the PayloadAction type to declare the contents of `action.payload`
         addActionHistory: (state, action) => {
-            const {playerName, actionType, videoElapsedTimeStamp } = action.payload;
+            const { playerName, actionType, videoElapsedTimeStamp } = action.payload;
             state.push({
                 home: true,
                 playerName: playerName,
@@ -29,6 +32,7 @@ export const ActionHistorySlice = createSlice({
                 videoElapsedTimeStamp: videoElapsedTimeStamp,
                 videoFormattedTimeStamp: formatElapsedTime(action.payload.videoElapsedTimeStamp)
             });
+            // console.log(showGameScore(action.payload))
         }
     }
 })
