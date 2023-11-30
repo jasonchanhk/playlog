@@ -1,11 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
 import VideoReducer from './slices/videoSlice'
-import ActionHistoryReducer from './slices/actionHistory'
 import GameReducer from './slices/gameSlice'
 
 export const store = configureStore({
-  reducer: {
-    actionHistory: ActionHistoryReducer, 
+  reducer: { 
     video: VideoReducer,
     game: GameReducer
   }

@@ -27,7 +27,7 @@ code {
 .youtubeContainer {
   position: relative;
   width: 100%;
-  height: 0;
+  /* height: 52.5%; */
   padding-bottom: 52.5%;
   /* overflow: hidden;
   margin-bottom: 50px; */

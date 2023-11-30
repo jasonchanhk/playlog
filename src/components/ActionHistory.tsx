@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAppSelector } from '../hooks'
-import { showAllActionHistory } from '../slices/actionHistory';
+import { showAllHistory } from '../slices/gameSlice';
 import { accessCurrentVideoElement } from '../slices/videoSlice';
 
 import { FaPlayCircle, FaPen } from "react-icons/fa";
@@ -8,7 +8,7 @@ import { IconContext } from 'react-icons';
 
 const ActionHistory: React.FC = () => {
 
-    const getAllActionHistory = useAppSelector(showAllActionHistory);
+    const getAllHistory = useAppSelector(showAllHistory);
     const getCurrentVideoElement = useAppSelector(accessCurrentVideoElement);
 
     const handleResume = (e: React.MouseEvent, videoElapsedTimeStamp: string) => {
@@ -17,15 +17,15 @@ const ActionHistory: React.FC = () => {
         getCurrentVideoElement.target.seekTo(videoElapsedTimeStamp);
     }
     return (
-        <section className='mx-3'>
+        <section className='mx-3 h-[50rem]'>
             <h3 className='font-bold py-3 px-12 bg-black text-white flex justify-center'>Action History</h3>
-            <div className='flex flex-col gap-y-2 py-2'>
-                {getAllActionHistory.map(({ playerName, actionType, videoElapsedTimeStamp, videoFormattedTimeStamp }) => {
+            <div className='flex flex-col gap-y-2 py-2 overflow-y-auto h-full'>
+                {getAllHistory.map(({ name, jersey, actionType, videoElapsedTimeStamp, videoFormattedTimeStamp, score }) => {
                     return (
                         <div className='border border-black shadow-md text-sm'>
                             <div className='border-b border-black flex justify-between px-2'>
                                 <span>
-                                    Q1 {videoFormattedTimeStamp} 0-0
+                                    Q1 {videoFormattedTimeStamp} {score.home}-{score.away}
                                 </span>
                                 <span className='flex flex-row gap-x-2'>
                                     <button>
@@ -44,8 +44,8 @@ const ActionHistory: React.FC = () => {
                                         2PA
                                     </div>
                                     <div className='ml-2'>
-                                        <span className='w-6 inline-block'>23.</span>
-                                        <span className='pl-1'>{playerName}</span>
+                                        <span className='w-6 inline-block'>{jersey}.</span>
+                                        <span className='pl-1'>{name}</span>
                                     </div>
                                 </div>
                             </div>

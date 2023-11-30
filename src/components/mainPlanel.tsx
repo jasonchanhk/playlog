@@ -51,16 +51,16 @@ const MainPanel: React.FC = () => {
         //     })
         //   }
         // </DndContext>
-        <section  className='my-16 py-8'>
+        <section  className='my-16 py-8 h-auto'>
             <h2 className="mb-8 text-6xl md:text-7xl font-bold tracking-tighter leading-tight">
                 2. Run statistic in your video
             </h2>
             <div className='flex'>
                 <div className='flex-1'>
-                    <div className='flex'>
+                    <div className=''>
                         <VideoPlayer />
                     </div>
-                    <div className="md:grid md:grid-cols-3 md:gap-x-16 lg:gap-x-4 max-h-full">
+                    <div className="md:grid md:grid-cols-3 md:gap-x-16 lg:gap-x-4 h-auto">
                         <PlayerList home={true} team={getHomeTeam}/>
                         <TeamView />
                         <PlayerList home={false} team={getAwayTeam}/>
