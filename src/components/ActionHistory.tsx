@@ -17,9 +17,9 @@ const ActionHistory: React.FC = () => {
         getCurrentVideoElement.target.seekTo(videoElapsedTimeStamp);
     }
     return (
-        <section className='mx-3 h-[50rem]'>
+        <section className='w-full flex flex-col overflow-hidden'>
             <h3 className='font-bold py-3 px-12 bg-black text-white flex justify-center'>Action History</h3>
-            <div className='flex flex-col gap-y-2 py-2 overflow-y-auto h-full'>
+            <div className='flex flex-col gap-y-2 py-2 overflow-y-auto min-h-0'>
                 {getAllHistory.map(({ name, jersey, actionType, videoElapsedTimeStamp, videoFormattedTimeStamp, score }) => {
                     return (
                         <div className='border border-black shadow-md text-sm'>
@@ -38,7 +38,7 @@ const ActionHistory: React.FC = () => {
 
                             </div>
                             <div className='flex flex-col px-2 py-1'>
-                                <h3>{actionType}</h3>
+                                <h3 className='font-medium'>{actionType.toUpperCase()}</h3>
                                 <div className='flex flex-row items-center'>
                                     <div className='flex justify-center w-16 h-4 bg-black text-white tracking-tighter leading- font-semibold text-xs items-center'>
                                         2PA

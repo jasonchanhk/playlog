@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import VideoReducer from './slices/videoSlice'
 import GameReducer from './slices/gameSlice'
+import ModalReducer from './slices/modalSlice'
 
 export const store = configureStore({
   reducer: { 
     video: VideoReducer,
-    game: GameReducer
+    game: GameReducer,
+    modal: ModalReducer
   }
 })
 

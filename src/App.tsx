@@ -4,6 +4,7 @@ import URLInput from './components/urlInput';
 import Container from './components/container';
 import Intro from './components/intro';
 import MainPanel from './components/mainPlanel';
+import FollowUp from './components/followUp';
 import Footer from './components/footer';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <Intro />
         <URLInput />
         <MainPanel />
+        <FollowUp />
       </Container>
       <Footer />
     </div>

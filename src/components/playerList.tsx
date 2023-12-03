@@ -4,7 +4,7 @@ import Droppable from '../templates/Droppable';
 import Draggable from '../templates/Draggable';
 import ButtonList from './ButtonList';
 
-import { FaListUl } from "react-icons/fa";
+import { IoEllipsisVerticalCircle } from "react-icons/io5";
 import { IconContext } from "react-icons"
 
 import { useAppSelector } from '../hooks';
@@ -80,11 +80,11 @@ const PlayerList: React.FC<props> = ({ home, team }) => {
                     </div>
                   </div>
                 </div>
-                <div className='has-tooltip'>
-                  <span className='tooltip rounded shadow-lg p-1 bg-gray-100 text-red-500 -mt-8'>
-                    <ButtonList id={id} home={home}/>
+                <div className='group/action'>
+                  <span className='absolute invisible group-hover/action:visible -mt-8'>
+                    <ButtonList id={id} home={home} />
                   </span>
-                  <IconContext.Provider value={{ className: "h-full flex item-center text-lg" }}><FaListUl /></IconContext.Provider>
+                  <IconContext.Provider value={{ className: "h-full flex item-center text-2xl" }}><IoEllipsisVerticalCircle /></IconContext.Provider>
                 </div>
               </li>
             )

@@ -53,9 +53,9 @@ const MainPanel: React.FC = () => {
         // </DndContext>
         <section  className='my-16 py-8 h-auto'>
             <h2 className="mb-8 text-6xl md:text-7xl font-bold tracking-tighter leading-tight">
-                2. Run statistic in your video
+                2. Log statistic in your video
             </h2>
-            <div className='flex'>
+            <div className='flex h-screen gap-2'>
                 <div className='flex-1'>
                     <div className=''>
                         <VideoPlayer />
@@ -66,7 +66,7 @@ const MainPanel: React.FC = () => {
                         <PlayerList home={false} team={getAwayTeam}/>
                     </div>
                 </div>
-                <div className='flex-initial w-72'>
+                <div className='flex flex-col flex-initial w-72 h-full'>
                     <ActionHistory />
                 </div>
             </div>
