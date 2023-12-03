@@ -4,6 +4,9 @@ import type { RootState } from '../store'
 export interface ModalState {
     assistModal: boolean;
     reboundModal: boolean;
+    point?: string;
+    id?: string;
+    home?: boolean;
 }
 
 // Define the initial state using that type
@@ -18,16 +21,26 @@ export const ModalSlice = createSlice({
     // `createSlice` will infer the state type from the `initialState` argument
     initialState,
     reducers: {
-        toggleAssistModal: (state) => {
+        toggleAssistModal: (state, action) => {
             state.assistModal = !state.assistModal;
+            state.point = action.payload.point;
+            state.home = action.payload.home;
+            state.id = action.payload.id;
         },
-        toggleReboundModal: (state) => {
+        toggleReboundModal: (state, action) => {
             state.reboundModal = !state.reboundModal;
+            state.point = action.payload.point;
+            state.home = action.payload.home;
+            state.id = action.payload.id;
+        },
+        reset: (state) => {
+            state.assistModal = false;
+            state.reboundModal = false;
         }
     }
 })
 
-export const { toggleAssistModal,toggleReboundModal  } = ModalSlice.actions
+export const { toggleAssistModal,toggleReboundModal, reset  } = ModalSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const showModalStatus = (state: RootState) => state.modal
