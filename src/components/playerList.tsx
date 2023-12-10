@@ -60,7 +60,7 @@ const PlayerList: React.FC<props> = ({ home, team }) => {
           )
         })
       } */}
-      <ul role="list" className="divide-y divide-gray-100p px-4">
+      <ul role="list" className="divide-y divide-gray-200 px-4">
         {
           team.players.map(({ id, name, jersey, made }) => {
             return (
@@ -84,7 +84,7 @@ const PlayerList: React.FC<props> = ({ home, team }) => {
                   <span className='absolute invisible group-hover/action:visible -mt-8'>
                     <ButtonList id={id} home={home} />
                   </span>
-                  <IconContext.Provider value={{ className: "h-full flex item-center text-2xl" }}><IoEllipsisVerticalCircle /></IconContext.Provider>
+                  <IconContext.Provider value={{ className: "h-full flex item-center text-2xl text-gray-500" }}><IoEllipsisVerticalCircle /></IconContext.Provider>
                 </div>
               </li>
             )
