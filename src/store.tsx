@@ -2,12 +2,14 @@ import { configureStore } from '@reduxjs/toolkit'
 import VideoReducer from './slices/videoSlice'
 import GameReducer from './slices/gameSlice'
 import ModalReducer from './slices/modalSlice'
+import TimerReducer from './slices/timerSlice'
 
 export const store = configureStore({
   reducer: { 
     video: VideoReducer,
     game: GameReducer,
-    modal: ModalReducer
+    modal: ModalReducer,
+    timer: TimerReducer
   }
 })
 

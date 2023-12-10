@@ -13,6 +13,10 @@ const FollowUp: React.FC = () => {
 
     const { assistModal, reboundModal, point, id, home } = useAppSelector(showModalStatus);
     const getBothTeam = useAppSelector(showBothTeam);
+
+    const ownTeam = home ? getBothTeam.home : getBothTeam.away;
+    const oppTeam= home ? getBothTeam.away : getBothTeam.home;
+
     const dispatch = useAppDispatch();
     const shotType = ['Layup', 'Shot', 'Dunk', 'Put Back'];
 
@@ -35,8 +39,8 @@ const FollowUp: React.FC = () => {
                 <h2 className='font-semibold text-xl py-2'>Foul</h2>
                 <div className='flex justify-between'>
                     <div className='flex'>
-                        {(home ? getBothTeam.away.players : getBothTeam.home.players).filter((player) => player.id != id).map(({ name }) => {
-                            return <div className='px-4 py-2 mr-2 bg-slate-100 rounded-lg'>{name}</div>
+                        {oppTeam.players.filter((player) => player.id != id).map(({ name, jersey }) => {
+                            return <div className={`px-4 py-2 mr-2 rounded-lg ${oppTeam.colour}`}>{jersey}. {name}</div>
                         })}
                     </div>
                     <div className='px-4 py-2 bg-slate-100 rounded-lg ml-2'>Skip</div>
@@ -51,8 +55,8 @@ const FollowUp: React.FC = () => {
                 <h2 className='font-semibold text-xl py-2'>Assist by</h2>
                 <div className='flex flex-row justify-between'>
                     <div className='flex'>
-                        {(home ? getBothTeam.home.players : getBothTeam.away.players).filter((player) => player.id != id).map(({ name }) => {
-                            return <div className='px-4 py-2 mr-2 bg-slate-100 rounded-lg'>{name}</div>
+                        {ownTeam.players.filter((player) => player.id != id).map(({ name, jersey }) => {
+                            return <div className={`px-4 py-2 mr-2 rounded-lg ${ownTeam.colour}`}>{jersey}. {name}</div>
                         })}
                     </div>
                     <div className='px-4 py-2 bg-slate-100 rounded-lg ml-2'>Skip</div>
@@ -67,13 +71,13 @@ const FollowUp: React.FC = () => {
                 <h2 className='font-semibold text-xl py-2'>Rebound by</h2>
                 <div className='flex flex-col'>
                     <div className='flex mb-2'>
-                        {(home ? getBothTeam.home.players : getBothTeam.away.players).map(({ name }) => {
-                            return <div className='px-4 py-2 mr-2 bg-slate-100 rounded-lg'>{name}</div>
+                        {ownTeam.players.map(({ name, jersey }) => {
+                            return <div className={`px-4 py-2 mr-2 rounded-lg ${ownTeam.colour}`}>{jersey}. {name}</div>
                         })}
                     </div>
                     <div className='flex'>
-                        {(home ? getBothTeam.away.players : getBothTeam.home.players).map(({ name }) => {
-                            return <div className='px-4 py-2 mr-2 bg-slate-100 rounded-lg'>{name}</div>
+                        {oppTeam.players.map(({ name, jersey }) => {
+                            return <div className={`px-4 py-2 mr-2 rounded-lg ${oppTeam.colour}`}>{jersey}. {name}</div>
                         })}
                     </div>
                 </div>

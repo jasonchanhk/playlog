@@ -20,12 +20,14 @@ const ActionHistory: React.FC = () => {
         <section className='w-full flex flex-col overflow-hidden'>
             <h3 className='font-bold py-3 px-12 bg-black text-white flex justify-center'>Action History</h3>
             <div className='flex flex-col gap-y-2 py-2 overflow-y-auto min-h-0'>
-                {getAllHistory.map(({ name, jersey, actionType, videoElapsedTimeStamp, videoFormattedTimeStamp, score }) => {
+                {getAllHistory.map(({ name, jersey, actionType, videoElapsedTimeStamp, score, timeLeft }) => {
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
                     return (
                         <div className='border border-black shadow-md text-sm'>
                             <div className='border-b border-black flex justify-between px-2'>
                                 <span>
-                                    Q1 {videoFormattedTimeStamp} {score.home}-{score.away}
+                                    Q1 {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds} {score.home}-{score.away}
                                 </span>
                                 <span className='flex flex-row gap-x-2'>
                                     <button>

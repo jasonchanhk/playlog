@@ -7,7 +7,8 @@ import { useAppDispatch, useAppSelector } from '../hooks';
 
 import { FaCheckSquare, FaWindowClose } from "react-icons/fa";
 import { PiNumberOneFill, PiNumberTwoFill, PiNumberThreeFill } from "react-icons/pi";
-import { toggleAssistModal, toggleReboundModal } from '../slices/modalSlice'
+import { toggleAssistModal, toggleReboundModal } from '../slices/modalSlice';
+import { accessTimeLeft } from '../slices/timerSlice'
 import { IconContext } from "react-icons"
 
 interface props {
@@ -18,6 +19,7 @@ interface props {
 const ButtonList: React.FC<props> = ({ home, id }) => {
     const dispatch = useAppDispatch();
     const getCurrentVideoElement = useAppSelector(accessCurrentVideoElement);
+    const timeLeft = useAppSelector(accessTimeLeft);
 
     const buttonList: string[] = ['Made 2', 'Missed 2', 'Made 3', 'Missed 3'];
 
@@ -26,27 +28,27 @@ const ButtonList: React.FC<props> = ({ home, id }) => {
         switch (action) {
             case 'Made 1':
                 dispatch(toggleAssistModal({home, id, point: 'onePoint'}));
-                dispatch(shot({ home, id, type: 'made', point: 'onePoint', videoElapsedTimeStamp: getCurrentVideoElement.target.getCurrentTime() }))
+                dispatch(shot({ home, id, type: 'made', point: 'onePoint', videoElapsedTimeStamp: getCurrentVideoElement.target.getCurrentTime(), timeLeft }))
                 break;
             case 'Missed 1':
                 dispatch(toggleReboundModal({home, id, point: 'onePoint'}));
-                dispatch(shot({ home, id, type: 'missed', point: 'onePoint', videoElapsedTimeStamp: getCurrentVideoElement.target.getCurrentTime() }))
+                dispatch(shot({ home, id, type: 'missed', point: 'onePoint', videoElapsedTimeStamp: getCurrentVideoElement.target.getCurrentTime(), timeLeft }))
                 break;
             case 'Made 2':
                 dispatch(toggleAssistModal({home, id, point: 'twoPoint'}));
-                dispatch(shot({ home, id, type: 'made', point: 'twoPoint', videoElapsedTimeStamp: getCurrentVideoElement.target.getCurrentTime() }))
+                dispatch(shot({ home, id, type: 'made', point: 'twoPoint', videoElapsedTimeStamp: getCurrentVideoElement.target.getCurrentTime(), timeLeft }))
                 break;
             case 'Missed 2':
                 dispatch(toggleReboundModal({home, id, point: 'twoPoint'}));
-                dispatch(shot({ home, id, type: 'missed', point: 'twoPoint', videoElapsedTimeStamp: getCurrentVideoElement.target.getCurrentTime() }))
+                dispatch(shot({ home, id, type: 'missed', point: 'twoPoint', videoElapsedTimeStamp: getCurrentVideoElement.target.getCurrentTime(), timeLeft }))
                 break;
             case 'Made 3':
                 dispatch(toggleAssistModal({home, id, point: 'threePoint'}));
-                dispatch(shot({ home, id, type: 'made', point: 'threePoint', videoElapsedTimeStamp: getCurrentVideoElement.target.getCurrentTime() }))
+                dispatch(shot({ home, id, type: 'made', point: 'threePoint', videoElapsedTimeStamp: getCurrentVideoElement.target.getCurrentTime(), timeLeft }))
                 break;
             case 'Missed 3':
                 dispatch(toggleReboundModal({home, id, point: 'threePoint'}));
-                dispatch(shot({ home, id, type: 'missed', point: 'threePoint', videoElapsedTimeStamp: getCurrentVideoElement.target.getCurrentTime() }))
+                dispatch(shot({ home, id, type: 'missed', point: 'threePoint', videoElapsedTimeStamp: getCurrentVideoElement.target.getCurrentTime(), timeLeft }))
                 break;
         }
     }

@@ -32,6 +32,7 @@ export interface TeamState {
     id: string;
     score: number;
     name: string;
+    colour: string;
     players: PlayerState[];
 }
 
@@ -42,6 +43,7 @@ export interface HistoryState {
     actionType: string;
     videoElapsedTimeStamp: string;
     videoFormattedTimeStamp: string;
+    timeLeft: number;
     score: {
         home: number;
         away: number;
@@ -61,6 +63,7 @@ const initialState: GameState = {
     home: {
         id: 'Westman',
         name: 'Westman',
+        colour: 'bg-red-600',
         score: 0,
         players: [
             { id: 'Sean', name: 'Sean', jersey: '6', made: { onePoint: 0, twoPoint: 0, threePoint: 0 }, missed: { onePoint: 0, twoPoint: 0, threePoint: 0 }, rebound: { offensive: 0, defensive: 0 }, assist: 0, steal: 0, turnover: 0, foul: 0 },
@@ -73,6 +76,7 @@ const initialState: GameState = {
     away: {
         id: 'Sutton',
         name: 'Sutton',
+        colour: 'bg-yellow-600',
         score: 0,
         players: [
             { id: 'Pong', name: 'Pong', jersey: '67', made: { onePoint: 0, twoPoint: 0, threePoint: 0 }, missed: { onePoint: 0, twoPoint: 0, threePoint: 0 }, rebound: { offensive: 0, defensive: 0 }, assist: 0, steal: 0, turnover: 0, foul: 0 },
@@ -109,6 +113,7 @@ export const GameSlice = createSlice({
                 actionType: `shot ${type}`,
                 videoElapsedTimeStamp: action.payload.videoElapsedTimeStamp,
                 videoFormattedTimeStamp: formatElapsedTime(action.payload.videoElapsedTimeStamp),
+                timeLeft: action.payload.timeLeft,
                 score: {
                     home: state.home.score,
                     away: state.away.score

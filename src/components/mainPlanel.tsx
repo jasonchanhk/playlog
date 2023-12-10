@@ -11,6 +11,7 @@ import VideoPlayer from './videoPlayer';
 import ActionHistory from './actionHistory';
 import PlayerList from './playerList';
 import TeamView from './teamView';
+import CountdownTimer from './coundown'
 
 export interface player {
     playerName: string;
@@ -20,8 +21,8 @@ export interface player {
 
 const MainPanel: React.FC = () => {
 
-  const getHomeTeam = useAppSelector(showHomeTeam);
-  const getAwayTeam = useAppSelector(showAwayTeam);
+    const getHomeTeam = useAppSelector(showHomeTeam);
+    const getAwayTeam = useAppSelector(showAwayTeam);
     // const handleDragEnd = (event: DragEndEvent) => {
     //   if (event.over) {
     //     setPlayerList(prevPlayerList => {
@@ -51,7 +52,7 @@ const MainPanel: React.FC = () => {
         //     })
         //   }
         // </DndContext>
-        <section  className='my-16 py-8 h-auto'>
+        <section className='my-16 py-8 h-auto'>
             <h2 className="mb-8 text-6xl md:text-7xl font-bold tracking-tighter leading-tight">
                 2. Log statistic in your video
             </h2>
@@ -60,10 +61,13 @@ const MainPanel: React.FC = () => {
                     <div className=''>
                         <VideoPlayer />
                     </div>
-                    <div className="md:grid md:grid-cols-3 md:gap-x-16 lg:gap-x-4 h-auto">
-                        <PlayerList home={true} team={getHomeTeam}/>
+                    <div className=''>
                         <TeamView />
-                        <PlayerList home={false} team={getAwayTeam}/>
+                    </div>
+                    <div className="md:grid md:grid-cols-3 md:gap-x-16 lg:gap-x-4 h-auto">
+                        <PlayerList home={true} team={getHomeTeam} />
+                        <CountdownTimer />
+                        <PlayerList home={false} team={getAwayTeam} />
                     </div>
                 </div>
                 <div className='flex flex-col flex-initial w-72 h-full'>
