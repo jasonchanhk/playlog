@@ -66,7 +66,7 @@ const MainPanel: React.FC = () => {
                     </div>
                     <div className="md:grid md:grid-cols-3 md:gap-x-16 lg:gap-x-4 h-auto">
                         <PlayerList home={true} team={getHomeTeam} />
-                        <CountdownTimer />
+                        <div>future modal</div>
                         <PlayerList home={false} team={getAwayTeam} />
                     </div>
                 </div>

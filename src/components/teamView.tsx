@@ -2,6 +2,7 @@ import React from 'react'
 import { showBothTeam, PlayerState } from '../slices/gameSlice'
 import { useAppSelector } from '../hooks';
 import { calculateTeamScore } from '../utils/gameHelper'
+import CountdownTimer from './coundown';
 
 const TeamView: React.FC = () => {
 
@@ -10,7 +11,7 @@ const TeamView: React.FC = () => {
     return (
         <div className='flex justify-between my-2'>
 
-            <div className='bg-red-600 w-6'></div>
+            <div className='bg-red-600 w-2'></div>
             <div className='flex justify-between  border-gray-200 border w-full border-s-0'>
                 <div className='p-2'>
                     <h3 className='leading-none tracking-tight'>Home</h3>
@@ -20,9 +21,8 @@ const TeamView: React.FC = () => {
                     <div className='w-full text-center'>{getBothTeam.home.score}</div>
                 </div>
             </div>
-            <div className='flex flex-col items-center font-bold align-middle'>
-                <div className='bg-slate-200 px-2 rounded-lg'>timeout</div>
-                <div className='bg-slate-200 px-2 rounded-lg'>jumpball</div>
+            <div className='mx-1'>
+                <CountdownTimer/>
             </div>
             <div className='flex justify-between border-gray-200 border w-full border-e-0'>
                 <div className='text-4xl flex items-center font-bold border-e border-gray-200 w-24 '>
@@ -33,7 +33,7 @@ const TeamView: React.FC = () => {
                     <h1 className='font-bold text-4xl leading-none tracking-tight'>{getBothTeam.away.name}</h1>
                 </div>
             </div>
-            <div className='bg-yellow-400 w-6'></div>
+            <div className='bg-yellow-400 w-2'></div>
 
         </div>
     )
