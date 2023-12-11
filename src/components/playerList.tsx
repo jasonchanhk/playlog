@@ -47,7 +47,7 @@ const PlayerList: React.FC<props> = ({ home, team }) => {
     //   }
     // </DndContext>
 
-    <div>
+    <div className='border border-gray-200'>
       {/* {
         playerList.map(({ playerName, twoPointMade, twoPointAttempt }) => {
           return (
@@ -60,14 +60,14 @@ const PlayerList: React.FC<props> = ({ home, team }) => {
           )
         })
       } */}
-      <ul role="list" className="divide-y divide-gray-200 px-4">
+      <ul role="list" className="divide-y divide-gray-200">
         {
           team.players.map(({ id, name, jersey, made }) => {
             return (
-              <li className='flex justify-between gap-x-6 py-1'>
+              <li className='flex justify-between py-1 pe-2'>
                 <div className="flex min-w-0 gap-x-4">
-                  <div className="flex items-center justify-center w-9">
-                    <span className="font-bold text-3xl tracking-tighter italic leading-tight">
+                  <div className="flex items-center justify-center w-14 border-e border-gray-200">
+                    <span className="font-bold text-3xl tracking-tighter italic leading-tight text-center">
                       {jersey}
                     </span>
                   </div>
