@@ -76,7 +76,7 @@ const initialState: GameState = {
     away: {
         id: 'Sutton',
         name: 'Sutton',
-        colour: 'bg-yellow-600',
+        colour: 'bg-yellow-400',
         score: 0,
         players: [
             { id: 'Pong', name: 'Pong', jersey: '67', made: { onePoint: 0, twoPoint: 0, threePoint: 0 }, missed: { onePoint: 0, twoPoint: 0, threePoint: 0 }, rebound: { offensive: 0, defensive: 0 }, assist: 0, steal: 0, turnover: 0, foul: 0 },

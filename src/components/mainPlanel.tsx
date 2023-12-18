@@ -12,6 +12,7 @@ import ActionHistory from './actionHistory';
 import PlayerList from './playerList';
 import TeamView from './teamView';
 import CountdownTimer from './coundown'
+import Console from './console';
 
 export interface player {
     playerName: string;
@@ -64,9 +65,9 @@ const MainPanel: React.FC = () => {
                     <div className=''>
                         <TeamView />
                     </div>
-                    <div className="md:grid md:grid-cols-3 md:gap-x-16 lg:gap-x-4 h-auto">
+                    <div className="md:grid md:grid-cols-3 md:gap-x-16 lg:gap-x-2 h-auto">
                         <PlayerList home={true} team={getHomeTeam} />
-                        <div>future modal</div>
+                        <Console />
                         <PlayerList home={false} team={getAwayTeam} />
                     </div>
                 </div>
