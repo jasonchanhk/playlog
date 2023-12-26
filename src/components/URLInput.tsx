@@ -6,7 +6,7 @@ import { IconContext } from "react-icons";
 
 const URLInput: React.FC = () => {
 
-    const [localUrl, setLocalUrl] = useState<string>('')
+    const [localUrl, setLocalUrl] = useState<string>('https://www.youtube.com/watch?v=TT-Wul8DD48')
     const dispatch = useAppDispatch();
     const videoId = useAppSelector(accessCurrentVideoId);
     const handleSubmit = (e: React.FormEvent) => {
