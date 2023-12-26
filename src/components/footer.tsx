@@ -23,7 +23,6 @@ const Footer: React.FC = () => {
               View on GitHub
             </a>
           </div>
-          <span><a href="https://www.flaticon.com/free-icons/basketball-jersey" title="basketball jersey icons">Basketball jersey icons created by IdeaGrafc - Flaticon</a>5555</span>
         </div>
       </Container>
     </footer>

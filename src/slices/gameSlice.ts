@@ -1,23 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../store'
-import { calculateTeamScore } from '../utils/gameHelper'
+import { calculateTeamScore, shotShortTermFormatter, pointTranslater } from '../utils/gameHelper'
 import { formatElapsedTime } from '../utils/datetimeHelper'
+import { save } from './modalSlice';
 
 // Define a type for the slice state
+export type shotScoreOption = {
+    onePoint: number;
+    twoPoint: number;
+    threePoint: number;
+}
+
 export interface PlayerState {
     id: string;
     jersey: string;
     name: string;
-    made: {
-        onePoint: number;
-        twoPoint: number;
-        threePoint: number;
-    };
-    missed: {
-        onePoint: number;
-        twoPoint: number;
-        threePoint: number;
-    };
+    made: shotScoreOption;
+    missed: shotScoreOption;
     rebound?: {
         offensive: number;
         defensive: number;
@@ -37,8 +36,6 @@ export interface TeamState {
 }
 
 export interface HistoryState {
-    name: string;
-    jersey:string;
     team: string;
     actionType: string;
     videoElapsedTimeStamp: string;
@@ -47,7 +44,13 @@ export interface HistoryState {
     score: {
         home: number;
         away: number;
-    }
+    };
+    shortRecords: shortRecord[]
+}
+
+export type shortRecord = {
+    actionShortTerm: string;
+    actionPlayer: PlayerState
 }
 
 export interface GameState {
@@ -63,7 +66,7 @@ const initialState: GameState = {
     home: {
         id: 'Westman',
         name: 'Westman',
-        colour: 'bg-red-600',
+        colour: 'red-600',
         score: 0,
         players: [
             { id: 'Sean', name: 'Sean', jersey: '6', made: { onePoint: 0, twoPoint: 0, threePoint: 0 }, missed: { onePoint: 0, twoPoint: 0, threePoint: 0 }, rebound: { offensive: 0, defensive: 0 }, assist: 0, steal: 0, turnover: 0, foul: 0 },
@@ -76,7 +79,7 @@ const initialState: GameState = {
     away: {
         id: 'Sutton',
         name: 'Sutton',
-        colour: 'bg-yellow-400',
+        colour: 'yellow-400',
         score: 0,
         players: [
             { id: 'Pong', name: 'Pong', jersey: '67', made: { onePoint: 0, twoPoint: 0, threePoint: 0 }, missed: { onePoint: 0, twoPoint: 0, threePoint: 0 }, rebound: { offensive: 0, defensive: 0 }, assist: 0, steal: 0, turnover: 0, foul: 0 },
@@ -95,42 +98,115 @@ export const GameSlice = createSlice({
     initialState,
     reducers: {
         // Use the PayloadAction type to declare the contents of `action.payload`
-        shot: (state, action) => {
+        made: (state, action) => {
             //mark personal profile
             let point: 'onePoint' | 'twoPoint' | 'threePoint' = action.payload.point;
-            let type: 'made' | 'missed' = action.payload.type;
             let team: 'home' | 'away' = action.payload.home ? 'home' : 'away';
             let playerId: string = action.payload.id
             let objIndex: number = state[team].players.findIndex((player => player.id == playerId));
-            state[team].players[objIndex][type][point] = state[team].players[objIndex][type][point] + 1;
+            state[team].players[objIndex].made[point] = state[team].players[objIndex].made[point] + 1;
             state.home.score = calculateTeamScore(state.home.players)
             state.away.score = calculateTeamScore(state.away.players)
-            //create record history
+        },
+        missed: (state, action) => {
+            //mark personal profile
+            let point: 'onePoint' | 'twoPoint' | 'threePoint' = action.payload.point;
+            let team: 'home' | 'away' = action.payload.home ? 'home' : 'away';
+            let playerId: string = action.payload.id
+            let objIndex: number = state[team].players.findIndex((player => player.id == playerId));
+            state[team].players[objIndex].missed[point] = state[team].players[objIndex].missed[point] + 1;
+            state.home.score = calculateTeamScore(state.home.players)
+            state.away.score = calculateTeamScore(state.away.players)
+        }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(save, (state, action) => {
+
+            const { timeLeft, actionType, point, playerId, home, assist, rebound, foul, shotType, videoElapsedTimeStamp } = action.payload;
+            let team: 'home' | 'away' = home? 'home' : 'away';
+            const shortRecords: shortRecord[] = [];
+
+            if (point != null && actionType != null) {
+                let objIndex: number = state[team].players.findIndex((player => player.id == playerId));
+                let shotPlayer: PlayerState = state[team].players[objIndex];
+                let shotRecord: shortRecord = {
+                    actionShortTerm: shotShortTermFormatter(actionType, point),
+                    actionPlayer: shotPlayer
+                }
+                shortRecords.push(shotRecord)
+            }
+            if(rebound != 'skip'){
+                let reboundPlayer: PlayerState;
+
+                let objIndex: number = state.home.players.findIndex((player => player.id == rebound));
+                if (objIndex < 0){
+                    objIndex = state.away.players.findIndex((player => player.id == rebound));
+                    reboundPlayer = state.away.players[objIndex]
+                }else{
+                    reboundPlayer = state.home.players[objIndex]
+                }
+                let reboundRecord: shortRecord  = {
+                    actionShortTerm: 'REB',
+                    actionPlayer: reboundPlayer
+                }
+                shortRecords.push(reboundRecord)
+            }
+            if(assist != 'skip'){
+                let objIndex: number = state[team].players.findIndex((player => player.id == assist));
+                let assistPlayer: PlayerState = state[team].players[objIndex]
+                let assistRecord: shortRecord = {
+                    actionShortTerm: 'AST',
+                    actionPlayer: assistPlayer
+                }
+                shortRecords.push(assistRecord)
+            }
+
             state.history.unshift({
-                name: state[team].players[objIndex].name,
-                jersey: state[team].players[objIndex].jersey,
                 team: team,
-                actionType: `shot ${type}`,
-                videoElapsedTimeStamp: action.payload.videoElapsedTimeStamp,
-                videoFormattedTimeStamp: formatElapsedTime(action.payload.videoElapsedTimeStamp),
-                timeLeft: action.payload.timeLeft,
+                actionType: `shot ${actionType}`,
+                videoElapsedTimeStamp: videoElapsedTimeStamp,
+                videoFormattedTimeStamp: formatElapsedTime(videoElapsedTimeStamp),
+                timeLeft: timeLeft,
                 score: {
                     home: state.home.score,
                     away: state.away.score
-                }
+                },
+                shortRecords: shortRecords
             });
-        },
+        })
+        //     // reduce the collection by the id property into a shape of { 1: { ...user }}
+        //     const byId = action.payload.users.reduce((byId, user) => {
+        //         byId[user.id] = user
+        //         return byId
+        //     }, {})
+        //     state.entities = byId
+        //     state.ids = Object.keys(byId)
+
+        // state.history.unshift({
+        //     name: state[team].players[objIndex].name,
+        //     jersey: state[team].players[objIndex].jersey,
+        //     team: team,
+        //     actionType: `shot ${type}`,
+        //     videoElapsedTimeStamp: action.payload.videoElapsedTimeStamp,
+        //     videoFormattedTimeStamp: formatElapsedTime(action.payload.videoElapsedTimeStamp),
+        //     timeLeft: action.payload.timeLeft,
+        //     score: {
+        //         home: state.home.score,
+        //         away: state.away.score
+        //     }
+        // });
+        //     })
     }
 })
 
-export const { shot } = GameSlice.actions
+export const { made, missed } = GameSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 // export const countActionHistory = (state: RootState) => state.actionHistory.length
 export const showHomeTeam = (state: RootState) => state.game.home;
 export const showAwayTeam = (state: RootState) => state.game.away;
 export const showBothTeam = (state: RootState) => state.game;
-export const showLiveScore = (state: RootState) => ({ home: state.game.home.score, away: state.game.away.score});
+export const showLiveScore = (state: RootState) => ({ home: state.game.home.score, away: state.game.away.score });
 export const showAllHistory = (state: RootState) => state.game.history;
 export const showAllHistoryCount = (state: RootState) => state.game.history.length;
 // game score

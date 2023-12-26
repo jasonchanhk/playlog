@@ -81,7 +81,7 @@ const PlayerList: React.FC<props> = ({ home, team }) => {
                   </div>
                 </div>
                 <div className='group/action'>
-                  <span className='absolute invisible group-hover/action:visible -mt-8'>
+                  <span className='absolute invisible group-hover/action:visible -mt-8 z-50'>
                     <ButtonList id={id} home={home} />
                   </span>
                   <IconContext.Provider value={{ className: "h-full flex item-center text-2xl text-gray-500" }}><IoEllipsisVerticalCircle /></IconContext.Provider>

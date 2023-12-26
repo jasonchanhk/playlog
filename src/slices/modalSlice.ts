@@ -1,48 +1,82 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { made, missed } from './gameSlice';
 import type { RootState } from '../store'
+import { pointTranslater } from '../utils/gameHelper';
 
 export interface ModalState {
-    assistModal: boolean;
-    reboundModal: boolean;
-    point?: string;
-    id?: string;
-    home?: boolean;
+    page: number;
+    actionType: string | null;
+    point?: string | null;
+    shotType?: string | null;
+    foul?: string;
+    rebound?: string;
+    assist?: string;
+    playerId?: string | null;
+    home?: boolean | null;
+    videoElapsedTimeStamp?: string | null;
+    timeLeft?: number;
 }
 
-// Define the initial state using that type
+// Define the initial state using that action
 const initialState: ModalState = {
-    assistModal: false,
-    reboundModal: false
+    page: 0,
+    actionType: null,
+    foul: 'skip',
+    rebound: 'skip',
+    assist: 'skip'
 };
 
 
 export const ModalSlice = createSlice({
     name: 'Modal',
-    // `createSlice` will infer the state type from the `initialState` argument
+    // `createSlice` will infer the state action from the `initialState` argument
     initialState,
     reducers: {
-        toggleAssistModal: (state, action) => {
-            state.assistModal = !state.assistModal;
+        next: (state, action) => {
+            state.page = state.page + action.payload
+        },
+        set: (state, action) => {
+            let category: 'shotType' | 'foul' | 'rebound' | 'assist' = action.payload.category;
+            state[category] = action.payload.playerId;
+        },
+        save: (state, action) => {
+            state.page = 0;
+            state.actionType = null;
+            state.point = null;
+            state.shotType = null;
+            state.foul = 'skip';
+            state.rebound = 'skip';
+            state.assist = 'skip';
+            state.playerId = null;
+            state.home = null;
+            state.videoElapsedTimeStamp = null;
+        },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(made, (state, action) => {
+            state.actionType = 'made';
+            state.point = action.payload.point; 
+            state.home = action.payload.home;
+            state.playerId = action.payload.id;
+            state.page = 1;
+            state.videoElapsedTimeStamp = action.payload.videoElapsedTimeStamp;
+            state.timeLeft = action.payload.timeLeft;
+        });
+        builder.addCase(missed, (state, action) => {
+            state.actionType = 'missed';
             state.point = action.payload.point;
             state.home = action.payload.home;
-            state.id = action.payload.id;
-        },
-        toggleReboundModal: (state, action) => {
-            state.reboundModal = !state.reboundModal;
-            state.point = action.payload.point;
-            state.home = action.payload.home;
-            state.id = action.payload.id;
-        },
-        reset: (state) => {
-            state.assistModal = false;
-            state.reboundModal = false;
-        }
+            state.playerId = action.payload.id;
+            state.page = 1;
+            state.videoElapsedTimeStamp = action.payload.videoElapsedTimeStamp;
+            state.timeLeft = action.payload.timeLeft;
+        });
     }
 })
 
-export const { toggleAssistModal,toggleReboundModal, reset  } = ModalSlice.actions
+export const { set, save, next } = ModalSlice.actions
 
-// Other code such as selectors can use the imported `RootState` type
+// Other code such as selectors can use the imported `RootState` action
 export const showModalStatus = (state: RootState) => state.modal
 
 export default ModalSlice.reducer

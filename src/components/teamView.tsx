@@ -11,7 +11,7 @@ const TeamView: React.FC = () => {
     return (
         <div className='flex justify-between my-2'>
 
-            <div className={`w-2 ${getBothTeam.home.colour}`}></div>
+            <div className={`w-2 bg-${getBothTeam.home.colour}`}></div>
             <div className='flex justify-between  border-gray-200 border w-full border-s-0'>
                 <div className='p-2'>
                     <h3 className='leading-none tracking-tight text-sm'>Home</h3>
@@ -33,7 +33,7 @@ const TeamView: React.FC = () => {
                     <h1 className='font-bold text-3xl leading-none tracking-tight'>{getBothTeam.away.name}</h1>
                 </div>
             </div>
-            <div className={`w-2 ${getBothTeam.away.colour}`}></div>
+            <div className={`w-2 bg-${getBothTeam.away.colour}`}></div>
 
         </div>
     )
