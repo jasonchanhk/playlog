@@ -143,7 +143,9 @@ const Console: React.FC = () => {
                     }
                 </>;
             default:
-                return <div>default</div>;
+                return <div className='flex justify-center items-center h-full text-gray-200 font-semibold'>
+                    <div>Coming soon...</div> 
+                </div>;
         }
     };
 
