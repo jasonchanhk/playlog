@@ -3,6 +3,11 @@ import { made, missed } from './gameSlice';
 import type { RootState } from '../store'
 import { pointTranslater } from '../utils/gameHelper';
 
+export interface Coordinate {
+    x: number | null;
+    y: number | null;
+}
+
 export interface ModalState {
     page: number;
     actionType: string | null;
@@ -15,6 +20,7 @@ export interface ModalState {
     home?: boolean | null;
     videoElapsedTimeStamp?: string | null;
     timeLeft?: number;
+    coordinate: Coordinate;
 }
 
 // Define the initial state using that action
@@ -23,7 +29,8 @@ const initialState: ModalState = {
     actionType: null,
     foul: 'skip',
     rebound: 'skip',
-    assist: 'skip'
+    assist: 'skip',
+    coordinate: { x: null, y: null }
 };
 
 
@@ -36,8 +43,8 @@ export const ModalSlice = createSlice({
             state.page = state.page + action.payload
         },
         set: (state, action) => {
-            let category: 'shotType' | 'foul' | 'rebound' | 'assist' = action.payload.category;
-            state[category] = action.payload.playerId;
+            let category: 'shotType' | 'foul' | 'rebound' | 'assist' | 'coordinate' = action.payload.category;
+            state[category] = action.payload.value;
         },
         save: (state, action) => {
             state.page = 0;
@@ -50,12 +57,13 @@ export const ModalSlice = createSlice({
             state.playerId = null;
             state.home = null;
             state.videoElapsedTimeStamp = null;
+            state.coordinate = { x: null, y: null };
         },
     },
     extraReducers: (builder) => {
         builder.addCase(made, (state, action) => {
             state.actionType = 'made';
-            state.point = action.payload.point; 
+            state.point = action.payload.point;
             state.home = action.payload.home;
             state.playerId = action.payload.id;
             state.page = 1;
