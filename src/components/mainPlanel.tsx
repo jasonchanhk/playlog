@@ -6,7 +6,7 @@ import Draggable from '../templates/Draggable';
 import ButtonList from './ButtonList';
 
 import { useAppSelector } from '../hooks';
-import { showHomeTeam, showAwayTeam } from '../slices/gameSlice'
+import { showHomePlayer, showAwayPlayer } from '../slices/playerSlice'
 import VideoPlayer from './videoPlayer';
 import ActionHistory from './actionHistory';
 import PlayerList from './playerList';
@@ -22,8 +22,8 @@ export interface player {
 
 const MainPanel: React.FC = () => {
 
-    const getHomeTeam = useAppSelector(showHomeTeam);
-    const getAwayTeam = useAppSelector(showAwayTeam);
+    const getHomePlayers = useAppSelector(showHomePlayer);
+    const getAwayPlayers = useAppSelector(showAwayPlayer);
     // const handleDragEnd = (event: DragEndEvent) => {
     //   if (event.over) {
     //     setPlayerList(prevPlayerList => {
@@ -66,9 +66,9 @@ const MainPanel: React.FC = () => {
                         <TeamView />
                     </div>
                     <div className="md:grid md:grid-cols-3 md:gap-x-16 lg:gap-x-2 h-auto">
-                        <PlayerList home={true} team={getHomeTeam} />
+                        <PlayerList home={true} players={getHomePlayers} />
                         <Console />
-                        <PlayerList home={false} team={getAwayTeam} />
+                        <PlayerList home={false} players={getAwayPlayers} />
                     </div>
                 </div>
                 <div className='flex flex-col flex-initial w-72 h-full'>

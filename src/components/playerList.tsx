@@ -9,13 +9,14 @@ import { IconContext } from "react-icons"
 
 import { useAppSelector } from '../hooks';
 import { TeamState } from '../slices/gameSlice'
+import { PlayerState } from '../slices/playerSlice';
 
 interface props {
   home: boolean;
-  team: TeamState;
+  players: PlayerState[];
 }
 
-const PlayerList: React.FC<props> = ({ home, team }) => {
+const PlayerList: React.FC<props> = ({ home, players }) => {
 
   // const handleDragEnd = (event: DragEndEvent) => {
   //   if (event.over) {
@@ -62,7 +63,7 @@ const PlayerList: React.FC<props> = ({ home, team }) => {
       } */}
       <ul role="list" className="divide-y divide-gray-200">
         {
-          team.players.map(({ id, name, jersey, made }) => {
+          players.map(({ id, name, jersey, made }) => {
             return (
               <li className='flex justify-between py-1 pe-2'>
                 <div className="flex min-w-0 gap-x-4">

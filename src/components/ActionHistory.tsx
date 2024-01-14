@@ -2,6 +2,7 @@ import React from 'react'
 import { useAppSelector } from '../hooks'
 import { showAllHistory } from '../slices/gameSlice';
 import { accessCurrentVideoElement } from '../slices/videoSlice';
+import { showAllPlayer } from '../slices/playerSlice';
 
 import { FaPlayCircle, FaPen } from "react-icons/fa";
 import { IconContext } from 'react-icons';
@@ -10,6 +11,7 @@ const ActionHistory: React.FC = () => {
 
     const getAllHistory = useAppSelector(showAllHistory);
     const getCurrentVideoElement = useAppSelector(accessCurrentVideoElement);
+    const getAllPlayer = useAppSelector(showAllPlayer);
 
     const handleResume = (e: React.MouseEvent, videoElapsedTimeStamp: string) => {
         e.preventDefault();
@@ -43,14 +45,15 @@ const ActionHistory: React.FC = () => {
                             <div className='flex flex-col px-2 py-1'>
                                 <h3 className='font-medium'>{actionType.toUpperCase()}</h3>
                                 {shortRecords.map(({ actionShortTerm, actionPlayer }) => {
+                                    const player = getAllPlayer.find((player) => player.id == actionPlayer)
                                     return (
                                         <div className='flex flex-row items-center'>
                                             <div className='flex justify-center w-16 h-4 bg-black text-white tracking-tighter leading- font-semibold text-xs items-center'>
                                                 {actionShortTerm}
                                             </div>
                                             <div className='ml-2'>
-                                                <span className='w-6 inline-block text-right'>{actionPlayer.jersey}.</span>
-                                                <span className='pl-1'>{actionPlayer.name}</span>
+                                                <span className='w-6 inline-block text-right'>{player!.jersey}.</span>
+                                                <span className='pl-1'>{player!.name}</span>
                                             </div>
                                         </div>)
                                 })}

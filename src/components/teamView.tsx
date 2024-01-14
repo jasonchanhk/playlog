@@ -1,5 +1,5 @@
 import React from 'react'
-import { showBothTeam, PlayerState } from '../slices/gameSlice'
+import { showBothTeam } from '../slices/gameSlice'
 import { useAppSelector } from '../hooks';
 import { calculateTeamScore } from '../utils/gameHelper'
 import CountdownTimer from './coundown';

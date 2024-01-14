@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { useAppSelector, useAppDispatch } from '../hooks';
 import { showModalStatus, set, save, next } from '../slices/modalSlice'
-import { showBothTeam } from '../slices/gameSlice'
+import { showHomePlayer, showAwayPlayer } from '../slices/playerSlice'
+import { showBothTeam } from '../slices/gameSlice';
 import { IoCaretBackSharp, IoCaretForwardSharp, IoSave } from "react-icons/io5";
 import { IconContext } from "react-icons"
 import {pointTranslater} from "../utils/gameHelper"
@@ -12,9 +13,14 @@ const Console: React.FC = () => {
     const { actionType, point, playerId, home, page, assist, rebound, foul, shotType } = useAppSelector(showModalStatus);
     const whole = useAppSelector(showModalStatus);
     const getBothTeam = useAppSelector(showBothTeam);
+    const ownTeamColour = home ? getBothTeam.home.colour : getBothTeam.away.colour;
+    const oppTeamColour = home ? getBothTeam.away.colour : getBothTeam.home.colour;
+    
+    const getHomePlayers = useAppSelector(showHomePlayer);
+    const getAwayPlayers = useAppSelector(showAwayPlayer);
 
-    const ownTeam = home ? getBothTeam.home : getBothTeam.away;
-    const oppTeam = home ? getBothTeam.away : getBothTeam.home;
+    const ownTeam = home ? getHomePlayers : getAwayPlayers;
+    const oppTeam = home ? getAwayPlayers : getHomePlayers;
 
     const dispatch = useAppDispatch();
     const shotTypeSample = ['Layup', 'Shot', 'Dunk', 'Put Back'];
@@ -38,13 +44,13 @@ const Console: React.FC = () => {
                 <h2 className='font-semibold text-sm py-2'>Foul</h2>
                 <div className='flex justify-between'>
                     <div className='flex'>
-                        {oppTeam.players.filter((player) => player.id != playerId).map(({ name, jersey, id }) => {
+                        {oppTeam.filter((player) => player.id != playerId).map(({ name, jersey, id }) => {
                             return <button className={`w-10 mr-2 flex flex-col items-center `} onClick={() => dispatch(set({ category: 'foul', value: id }))}>
-                                <div className={`flex flex-col items-center border border-b-0 w-full py-1 ${foul == id ? `bg-${oppTeam.colour} text-white border-0` : null}`}>
+                                <div className={`flex flex-col items-center border border-b-0 w-full py-1 ${foul == id ? `bg-${oppTeamColour} text-white border-0` : null}`}>
                                     <div className='italic font-bold text-xl leading-tight '>{jersey}</div>
                                     <div className='leading-tight text-xs'>{name.slice(0, 3).toUpperCase()}</div>
                                 </div>
-                                <div className={`bg-${oppTeam.colour} h-0.5 w-full`}></div>
+                                <div className={`bg-${oppTeamColour} h-0.5 w-full`}></div>
                             </button>
                         })}
                     </div>
@@ -62,13 +68,13 @@ const Console: React.FC = () => {
                 <h2 className='font-semibold text-sm py-2'>Assist by</h2>
                 <div className='flex flex-row justify-between'>
                     <div className='flex'>
-                        {ownTeam.players.filter((player) => player.id != playerId).map(({ name, jersey, id }) => {
+                        {ownTeam.filter((player) => player.id != playerId).map(({ name, jersey, id }) => {
                             return <button className={`w-10 mr-2 flex flex-col items-center `} onClick={() => dispatch(set({ category: 'assist', value: id }))}>
-                                <div className={`flex flex-col items-center border border-b-0 w-full py-1 ${assist == id ? `bg-${ownTeam.colour} text-white border-0` : null}`}>
+                                <div className={`flex flex-col items-center border border-b-0 w-full py-1 ${assist == id ? `bg-${ownTeamColour} text-white border-0` : null}`}>
                                     <div className='italic font-bold text-xl leading-tight '>{jersey}</div>
                                     <div className='leading-tight text-xs'>{name.slice(0, 3).toUpperCase()}</div>
                                 </div>
-                                <div className={`bg-${ownTeam.colour} h-0.5 w-full`}></div>
+                                <div className={`bg-${ownTeamColour} h-0.5 w-full`}></div>
                             </button>
                         })}
                     </div>
@@ -87,13 +93,13 @@ const Console: React.FC = () => {
                 <div className='flex flex-col'>
                     <div className='flex flex-row justify-between mb-2'>
                         <div className='flex'>
-                            {ownTeam.players.map(({ name, jersey, id }) => {
+                            {ownTeam.map(({ name, jersey, id }) => {
                                 return <button className={`w-10 mr-2 flex flex-col items-center `} onClick={() => dispatch(set({ category: 'rebound', value: id }))}>
-                                    <div className={`flex flex-col items-center border border-b-0 w-full py-1 ${rebound == id ? `bg-${ownTeam.colour} text-white border-0` : null}`}>
+                                    <div className={`flex flex-col items-center border border-b-0 w-full py-1 ${rebound == id ? `bg-${ownTeamColour} text-white border-0` : null}`}>
                                         <div className='italic font-bold text-xl leading-tight '>{jersey}</div>
                                         <div className='leading-tight text-xs'>{name.slice(0, 3).toUpperCase()}</div>
                                     </div>
-                                    <div className={`bg-${ownTeam.colour} h-0.5 w-full`}></div>
+                                    <div className={`bg-${ownTeamColour} h-0.5 w-full`}></div>
                                 </button>
                             })}
                         </div>
@@ -102,13 +108,13 @@ const Console: React.FC = () => {
                         </button>
                     </div>
                     <div className='flex'>
-                        {oppTeam.players.map(({ name, jersey, id }) => {
+                        {oppTeam.map(({ name, jersey, id }) => {
                             return <button className={`w-10 mr-2 flex flex-col items-center `} onClick={() => dispatch(set({ category: 'rebound', value: id }))}>
-                                <div className={`flex flex-col items-center border border-b-0 w-full py-1 ${rebound == id ? `bg-${oppTeam.colour} text-white border-0` : null}`}>
+                                <div className={`flex flex-col items-center border border-b-0 w-full py-1 ${rebound == id ? `bg-${oppTeamColour} text-white border-0` : null}`}>
                                     <div className='italic font-bold text-xl leading-tight '>{jersey}</div>
                                     <div className='leading-tight text-xs'>{name.slice(0, 3).toUpperCase()}</div>
                                 </div>
-                                <div className={`bg-${oppTeam.colour} h-0.5 w-full`}></div>
+                                <div className={`bg-${oppTeamColour} h-0.5 w-full`}></div>
                             </button>
                         })}
                     </div>

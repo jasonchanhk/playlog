@@ -2,7 +2,7 @@ import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 
 import { accessCurrentVideoElement } from '../slices/videoSlice';
-import { made, missed } from '../slices/gameSlice'
+import { made, missed } from '../slices/playerSlice'
 import { useAppDispatch, useAppSelector } from '../hooks';
 
 import { FaCheck, FaCheckSquare, FaWindowClose } from "react-icons/fa";

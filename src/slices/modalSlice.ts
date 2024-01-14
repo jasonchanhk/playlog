@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { made, missed } from './gameSlice';
+import { made, missed } from './playerSlice';
 import type { RootState } from '../store'
 import { pointTranslater } from '../utils/gameHelper';
 

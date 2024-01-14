@@ -1,4 +1,4 @@
-import { PlayerState } from "../slices/gameSlice";
+import { PlayerState } from "../slices/playerSlice";
 
 export const calculateTeamScore = (players: PlayerState[]) => {
     let score: number = 0;
