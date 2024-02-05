@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAppSelector } from '../hooks'
-import { showAllHistory } from '../slices/gameSlice';
+import { showBothTeam, showAllHistory } from '../slices/gameSlice';
 import { accessCurrentVideoElement } from '../slices/videoSlice';
 import { showAllPlayer } from '../slices/playerSlice';
 
@@ -12,6 +12,8 @@ const ActionHistory: React.FC = () => {
     const getAllHistory = useAppSelector(showAllHistory);
     const getCurrentVideoElement = useAppSelector(accessCurrentVideoElement);
     const getAllPlayer = useAppSelector(showAllPlayer);
+    const getBothTeam = useAppSelector(showBothTeam);
+
 
     const handleResume = (e: React.MouseEvent, videoElapsedTimeStamp: string) => {
         e.preventDefault();
@@ -46,13 +48,14 @@ const ActionHistory: React.FC = () => {
                                 <h3 className='font-medium'>{actionType.toUpperCase()}</h3>
                                 {shortRecords.map(({ actionShortTerm, actionPlayer }) => {
                                     const player = getAllPlayer.find((player) => player.id == actionPlayer)
+                                    const playerTeamColour = player!.home ? getBothTeam.home.colour : getBothTeam.away.colour 
                                     return (
                                         <div className='flex flex-row items-center'>
-                                            <div className='flex justify-center w-16 h-4 bg-black text-white tracking-tighter leading- font-semibold text-xs items-center'>
+                                            <div className={`flex justify-center w-16 h-4 bg-${playerTeamColour} text-white tracking-tighter font-semibold text-xs items-center`}>
                                                 {actionShortTerm}
                                             </div>
-                                            <div className='ml-2'>
-                                                <span className='w-6 inline-block text-right'>{player!.jersey}.</span>
+                                            <div className='ml-4'>
+                                                <span className='w-4 inline-block'>{player!.jersey}.</span>
                                                 <span className='pl-1'>{player!.name}</span>
                                             </div>
                                         </div>)

@@ -15,7 +15,6 @@ export interface TeamState {
 export interface HistoryState {
     actionType: string;
     videoElapsedTimeStamp: string;
-    videoFormattedTimeStamp: string;
     timeLeft: number;
     score: {
         home: number;
@@ -90,7 +89,6 @@ export const GameSlice = createSlice({
             state.history.unshift({
                 actionType: `shot ${actionType}`,
                 videoElapsedTimeStamp: videoElapsedTimeStamp,
-                videoFormattedTimeStamp: formatElapsedTime(videoElapsedTimeStamp),
                 timeLeft: timeLeft,
                 score: {
                     home: state.home.score,
@@ -114,6 +112,7 @@ export const showBothTeam = (state: RootState) => state.game;
 export const showLiveScore = (state: RootState) => ({ home: state.game.home.score, away: state.game.away.score });
 export const showAllHistory = (state: RootState) => state.game.history;
 export const showAllHistoryCount = (state: RootState) => state.game.history.length;
+export const showAllScoredMoment = (state: RootState) => state.game.history.filter((h) => h.actionType == 'shot made');
 // game score
 // game quarter & time
 

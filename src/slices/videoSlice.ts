@@ -12,8 +12,8 @@ export interface VideoState {
 
 // Define the initial state using that type
 const initialState: VideoState = {
-    videoUrl: '',
-    videoId: '',
+    videoUrl: 'https://www.youtube.com/watch?v=TT-Wul8DD48',
+    videoId: 'TT-Wul8DD48',
     videoElement: null
 };
 
