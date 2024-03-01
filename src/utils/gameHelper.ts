@@ -64,3 +64,19 @@ export const shotShortTermFormatter = (actionType: string, point: string) => {
     return shortTerm;
 }
 
+export const shotShortTermDeserialiser = (shortTerm: string) => {
+    switch (shortTerm[0]) {
+        case '3':
+            return '3'
+            break;
+        case '2':
+            return '2'
+            break;
+        case 'F':
+            return '1'
+            break;
+        default:
+            return '';
+    }
+}
+

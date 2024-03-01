@@ -37,7 +37,7 @@ export interface GameState {
 
 // Define the initial state using that type
 const initialState: GameState = {
-    id: 'game',
+    id: 'Game',
     home: {
         id: 'Westman',
         name: 'Westman',
