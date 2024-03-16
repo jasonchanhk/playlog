@@ -63,7 +63,7 @@ const PlayerList: React.FC<props> = ({ home, players }) => {
       } */}
       <ul role="list" className="divide-y divide-gray-200">
         {
-          players.map(({ id, name, jersey, made }) => {
+          players.map(({ id, name, jersey, made, rebound, assist }) => {
             return (
               <li className='flex justify-between py-1 pe-2'>
                 <div className="flex min-w-0 gap-x-4">
@@ -76,8 +76,8 @@ const PlayerList: React.FC<props> = ({ home, players }) => {
                     <div className="text-sm font-semibold leading-tight text-gray-900">{name}</div>
                     <div className="text-xs text-gray-500 w-full flex leading-tight">
                       <span className='w-10'>{made.onePoint * 1 + made.twoPoint * 2 + made.threePoint * 3} pts</span>
-                      <span className='w-10'>0 reb</span>
-                      <span className='w-10'>0 ast</span>
+                      <span className='w-10'>{rebound.offensive + rebound.defensive} reb</span>
+                      <span className='w-10'>{assist} ast</span>
                     </div>
                   </div>
                 </div>
