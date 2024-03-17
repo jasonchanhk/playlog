@@ -7,7 +7,7 @@ import MainPanel from './components/mainPlanel';
 import Footer from './components/footer';
 import ActionExport from './components/actionExport';
 
-function App() {
+const App: React.FC = () => {
 
   return (
     <div className="App">
