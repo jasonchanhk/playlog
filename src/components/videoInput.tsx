@@ -4,7 +4,7 @@ import { registerVideoUrl, accessCurrentVideoId } from '../slices/videoSlice';
 import { FaYoutube, FaSearch } from "react-icons/fa";
 import { IconContext } from "react-icons";
 
-const URLInput: React.FC = () => {
+const VideoInput: React.FC = () => {
 
     const [localUrl, setLocalUrl] = useState<string>('https://www.youtube.com/watch?v=TT-Wul8DD48')
     const dispatch = useAppDispatch();
@@ -44,4 +44,4 @@ const URLInput: React.FC = () => {
     )
 }
 
-export default URLInput
+export default VideoInput

@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import URLInput from './components/urlInput';
+import VideoInput from './components/videoInput';
 import Container from './components/container';
 import Intro from './components/intro';
 import MainPanel from './components/mainPlanel';
@@ -13,7 +13,7 @@ const App: React.FC = () => {
     <div className="App">
       <Container>
         <Intro />
-        <URLInput />
+        <VideoInput />
         <MainPanel />
         <ActionExport />
       </Container>
